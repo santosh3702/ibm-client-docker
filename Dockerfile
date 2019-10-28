@@ -1,24 +1,6 @@
-# © Copyright IBM Corporation 2015, 2017
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 FROM ubuntu:16.04
 
-LABEL maintainer "Arthur Barr <arthur.barr@uk.ibm.com>, Rob Parker <PARROBE@uk.ibm.com>"
-
-LABEL "ProductID"="98102d16795c4263ad9ca075190a2d4d" \
-      "ProductName"="IBM MQ Advanced for Developers" \
-      "ProductVersion"="9.0.4"
+LABEL maintainer "Goru Santosh Rahul <gorusantosh.rahul1@tcs.com>"
 
 # The URL to download the MQ installer from in tar.gz format
 ARG MQ_URL=http://168.61.182.56:8001/9.1.0.3-IBM-MQC-UbuntuLinuxX64.tar.gz
@@ -88,23 +70,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   # Don't upgrade everything based on Docker best practices https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
   && apt-get upgrade -y sensible-utils \
   # End of bug fixes
-  && rm -rf /var/lib/apt/lists/* \
-  # Optional: Update the command prompt with the MQ version
-  && echo "mq:$(dspmqver -b -f 2)" > /etc/debian_chroot \
-  && rm -rf /var/mqm \
-  # Optional: Set these values for the Bluemix Vulnerability Report
-  && sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t90/' /etc/login.defs \
-  && sed -i 's/PASS_MIN_DAYS\t0/PASS_MIN_DAYS\t1/' /etc/login.defs \
-  && sed -i 's/password\t\[success=1 default=ignore\]\tpam_unix\.so obscure sha512/password\t[success=1 default=ignore]\tpam_unix.so obscure sha512 minlen=8/' /etc/pam.d/common-password
+  && rm -rf /var/lib/apt/lists/* 
 
 COPY *.sh /usr/local/bin/
-COPY *.mqsc /etc/mqm/
-COPY admin.json /etc/mqm/
-
-COPY mq-dev-config /etc/mqm/mq-dev-config
 
 RUN chmod +x /usr/local/bin/*.sh
-
 
 ENV LANG=en_US.UTF-8
 
