@@ -5,6 +5,6 @@ mq-license-check.sh
 echo "----------------------------------------"
 setup-var-mqm.sh
 echo "----------------------------------------"
-mq-configure-qmgr.sh
+mq-pre-create-setup.sh
 echo "----------------------------------------"
 exec mq-monitor-qmgr.sh

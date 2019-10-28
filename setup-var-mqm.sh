@@ -1,7 +1,7 @@
 #!/bin/bash
 
-find /mnt /var /etc -group 1000 | xargs chgrp 999
-find /mnt /var /etc -user 1000 | xargs chown 999
+#find /mnt /var /etc -group 1000 | xargs chgrp 999
+#find /mnt /var /etc -user 1000 | xargs chown 999
 
 if [ -d "/var/mqm/qmgrs" ]; then
   # User is probably following old instructions to mount a volume into /var/mqm
